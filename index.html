@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap');
+
+        :root {
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+            --color-gold: #d4af37;
+            --color-dark-gold: #b8860b;
+            --color-bg: #fffaf0;
+            --color-card: #ffffff;
+            --color-text: #4a4a4a;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, var(--color-bg), #fdf5e6);
+            color: var(--color-text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--color-card);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 40px;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--color-gold);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--color-dark-gold);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            border-bottom: 2px solid #f0e6d2;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        p.letter {
+            font-size: 1.1em;
+            line-height: 1.7;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* --- Photo Gallery Styles --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* --- Lightbox Modal Styles --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: auto;
+            max-width: 80%;
+            max-height: 80vh;
+        }
+
+        .modal-content, #modal-caption {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        /* --- Interactive Card Deck Styles --- */
+        .card-deck {
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .reason-card {
+            background: linear-gradient(135deg, #fffaf0, #fdf5e6);
+            border: 1px solid #f0e6d2;
+            border-radius: 10px;
+            padding: 30px;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: var(--font-heading);
+            font-size: 1.4em;
+            color: var(--color-dark-gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: opacity 0.4s ease;
+        }
+        
+        #reason-text {
+            opacity: 1;
+            margin: 0;
+        }
+
+        .card-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .card-nav button {
+            background: var(--color-gold);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-family: var(--font-body);
+            font-weight: bold;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-nav button:hover {
+            background: var(--color-dark-gold);
+        }
+        
+        .card-nav button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        #card-counter {
+            font-family: var(--font-body);
+            font-size: 1em;
+            color: #aaa;
+            font-weight: 300;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <h1>Happy Birthday, !</h1>
+        
+        <h2>To my "white and gold"</h2>
+
+        <h3>A Little Note for You</h3>
+        <p class="letter">
+            You thought the cards were the only gift? I wanted to make something a little more permanent,
+            a place to remind you just how amazing you are. You are my absolute world...
+            </p>
+
+        <h3>Our Moments</h3>
+        <div class="gallery-grid">
+            <img src="placeholder1.jpg" alt="A photo of us" onclick="openModal(this)">
+            <img src="placeholder2.jpg" alt="A photo of us" onclick="openModal(this)">
+            <img src="placeholder3.jpg" alt="A photo of us" onclick="openModal(this)">
+            <img src="placeholder4.jpg" alt="A photo of us" onclick="openModal(this)">
+            </div>
+
+        <div id="myModal" class="modal">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modal-img">
+        </div>
+
+        <h3>54 Reasons Why I Love You</h3>
+        <div class="card-deck">
+            <div class="reason-card">
+                <p id="reason-text">Click 'Next' to see the reasons!</p>
+            </div>
+            <div class="card-nav">
+                <button id="prev-btn">Previous</button>
+                <span id="card-counter">0/54</span>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 2. (CONTINUED) EDIT YOUR 54 REASONS HERE ---
+        // Just change the text inside the quotation marks.
+        // Make sure you have 54 of them!
+        const reasons = [
+            "Reason 1: Because of the way you smile...",
+            "Reason 2: Because you're my best friend.",
+            "Reason 3: Because you make me laugh.",
+            "Reason 4: ...",
+            "Reason 5: ...",
+            "Reason 6: ...",
+            "Reason 7: ...",
+            "Reason 8: ...",
+            "Reason 9: ...",
+            "Reason 10: ...",
+            "Reason 11: ...",
+            "Reason 12: ...",
+            "Reason 13: ...",
+            "Reason 14: ...",
+            "Reason 15: ...",
+            "Reason 16: ...",
+            "Reason 17: ...",
+            "Reason 18: ...",
+            "Reason 19: ...",
+            "Reason 20: ...",
+            "Reason 21: ...",
+            "Reason 22: ...",
+            "Reason 23: ...",
+            "Reason 24: ...",
+            "Reason 25: ...",
+            "Reason 26: ...",
+            "Reason 27: ...",
+            "Reason 28: ...",
+            "Reason 29: ...",
+            "Reason 30: ...",
+            "Reason 31: ...",
+            "Reason 32: ...",
+            "Reason 33: ...",
+            "Reason 34: ...",
+            "Reason 35: ...",
+            "Reason 36: ...",
+            "Reason 37: ...",
+            "Reason 38: ...",
+            "Reason 39: ...",
+            "Reason 40: ...",
+            "Reason 41: ...",
+            "Reason 42: ...",
+            "Reason 43: ...",
+            "Reason 44: ...",
+            "Reason 45: ...",
+            "Reason 46: ...",
+            "Reason 47: ...",
+            "Reason 48: ...",
+            "Reason 49: ...",
+            "Reason 50: ...",
+            "Reason 51: ...",
+            "Reason 52: ...",
+            "Reason 53: ...",
+            "Reason 54: And most of all, because you are you."
+        ];
+
+        // --- Don't edit the code below this line ---
+
+        // Card Deck Logic
+        const reasonText = document.getElementById('reason-text');
+        const cardCounter = document.getElementById('card-counter');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+
+        let currentReasonIndex = -1;
+        const totalReasons = reasons.length;
+
+        function updateCard() {
+            // Update text
+            reasonText.style.opacity = 0; // Fade out
+            
+            setTimeout(() => {
+                if (currentReasonIndex === -1) {
+                    reasonText.textContent = "Click 'Next' to see the reasons!";
+                    cardCounter.textContent = `0/${totalReasons}`;
+                } else {
+                    reasonText.textContent = reasons[currentReasonIndex];
+                    cardCounter.textContent = `${currentReasonIndex + 1}/${totalReasons}`;
+                }
+                reasonText.style.opacity = 1; // Fade in
+            }, 300); // Wait for fade out to finish
+
+            // Update button states
+            prevBtn.disabled = (currentReasonIndex <= -1);
+            nextBtn.disabled = (currentReasonIndex >= totalReasons - 1);
+        }
+
+        nextBtn.onclick = () => {
+            if (currentReasonIndex < totalReasons - 1) {
+                currentReasonIndex++;
+                updateCard();
+            }
+        };
+
+        prevBtn.onclick = () => {
+            if (currentReasonIndex > -1) {
+                currentReasonIndex--;
+                updateCard();
+            }
+        };
+        
+        // Initialize card deck
+        updateCard();
+
+        // Modal Gallery Logic
+        const modal = document.getElementById('myModal');
+        const modalImg = document.getElementById('modal-img');
+
+        function openModal(imgElement) {
+            modal.style.display = "block";
+            modalImg.src = imgElement.src;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+        
+        // Close modal if user clicks outside the image
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+    </script>
+
+</body>
+</html>
